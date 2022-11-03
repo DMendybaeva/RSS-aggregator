@@ -1,7 +1,10 @@
 import * as yup from 'yup';
-import getWatchedState from './view.js';
+import i18n from 'i18next';
 
-export default () => {
+import getWatchedState from './view.js';
+import resources from './locales/index.js';
+
+const runApp = (t) => {
   const state = {
     form: {
       isValid: true,
@@ -23,15 +26,23 @@ export default () => {
     const text = formData.get('url');
 
     const schema = yup.string().trim()
-      .required('Please, provide RSS link')
-      .url('RSS link must be a valid URL');
+      .required(t('errorsMessage.required'))
+      .url(t('errorsMessage.format'));
 
     schema.validate(text).then(() => {
-      watchedState.form.error = '';
+      watchedState.form.error = t('errorsuccessMessage');
       watchedState.form.isValid = true;
     }).catch((error) => {
       watchedState.form.isValid = false;
       watchedState.form.error = error.message;
     });
   });
+};
+
+export default () => {
+  const i18nextInstance = i18n.createInstance();
+  i18nextInstance.init({
+    lng: 'ru',
+    resources,
+  }).then((t) => runApp(t));
 };
