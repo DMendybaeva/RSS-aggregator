@@ -41,7 +41,7 @@ const runApp = (t) => {
       })
       .then((response) => {
         const data = parse(response.data.contents);
-        watchedState.feeds.unshift(data);
+        watchedState.feeds = [data, ...watchedState.feeds];
       })
       .catch((error) => {
         watchedState.form.isValid = false;
