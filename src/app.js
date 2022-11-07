@@ -19,7 +19,7 @@ const runApp = (t) => {
     form: document.querySelector('.rss-form'),
     errorContainer: document.querySelector('.feedback'),
     input: document.querySelector('input'),
-    feedContainer: document.querySelector('.feeds'),
+    feedsContainer: document.querySelector('.feeds'),
   };
 
   const watchedState = getWatchedState(state, elements);
@@ -42,7 +42,6 @@ const runApp = (t) => {
       .then((response) => {
         const data = parse(response.data.contents);
         watchedState.feeds.unshift(data);
-        console.log(watchedState);
       })
       .catch((error) => {
         watchedState.form.isValid = false;
