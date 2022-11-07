@@ -5,20 +5,16 @@ import renderFeed from './renderFeed.js';
 import handleFormIsValid from './handleFormIsValid.js';
 import handleFormError from './handleFormError.js';
 
-export default (
-  state,
-  { errorContainer, input, feedsContainer },
-  t,
-) => onChange(state, (path, value) => {
+export default (state, elements, t) => onChange(state, (path, value) => {
   switch (path) {
     case 'form.error':
-      handleFormError(state, value, { errorContainer }, t);
+      handleFormError(state, value, elements, t);
       break;
     case 'form.isValid':
-      handleFormIsValid(value, { input, feedsContainer });
+      handleFormIsValid(value, elements);
       break;
     case 'feeds': {
-      renderFeed(value, { feedsContainer }, t);
+      renderFeed(value, elements, t);
       break;
     }
     default:
