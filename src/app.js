@@ -20,7 +20,7 @@ const runApp = (t) => {
     feedsContainer: document.querySelector('.feeds'),
   };
 
-  const watchedState = getWatchedState(state, elements);
+  const watchedState = getWatchedState(state, elements, t);
 
   elements.form.addEventListener('submit', (e) => {
     e.preventDefault();

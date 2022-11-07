@@ -1,4 +1,4 @@
-export default (value, { feedsContainer }) => {
+export default (value, { feedsContainer }, t) => {
   const feedsContainerCard = document.createElement('div');
   feedsContainerCard.classList.add('card', 'border-0');
 
@@ -7,7 +7,7 @@ export default (value, { feedsContainer }) => {
 
   const h2 = document.createElement('h2');
   h2.classList.add('card-title', 'h4');
-  h2.textContent = 'Фиды';
+  h2.textContent = t('feeds.title');
 
   const ul = document.createElement('ul');
   ul.classList.add('list-group', 'border-0', 'rounded-0');

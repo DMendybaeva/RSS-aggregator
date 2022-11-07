@@ -8,16 +8,17 @@ import handleFormError from './handleFormError.js';
 export default (
   state,
   { errorContainer, input, feedsContainer },
+  t,
 ) => onChange(state, (path, value) => {
   switch (path) {
     case 'form.error':
-      handleFormError(state, value, { errorContainer });
+      handleFormError(state, value, { errorContainer }, t);
       break;
     case 'form.isValid':
       handleFormIsValid(value, { input, feedsContainer });
       break;
     case 'feeds': {
-      renderFeed(value, { feedsContainer });
+      renderFeed(value, { feedsContainer }, t);
       break;
     }
     default:

@@ -1,9 +1,15 @@
 import * as yup from 'yup';
 
-export default (url, t) => {
-  const schema = yup.string().trim()
-    .required(t('errorsMessage.required'))
-    .url(t('errorsMessage.format'));
+export default (url) => {
+  yup.setLocale({
+    mixed: {
+      required: 'errorsMessages.required',
+    },
+    string: {
+      url: 'errorsMessages.format',
+    },
+  });
+  const schema = yup.string().required().url();
 
-  return schema.validate(url);
+  return schema.validate(url.trim());
 };

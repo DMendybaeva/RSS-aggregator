@@ -5,5 +5,8 @@ export default {
       format: 'Ссылка должна быть валидным URL',
       required: 'Поле не должно быть пустым',
     },
+    feeds: {
+      title: 'Фиды',
+    },
   },
 };
