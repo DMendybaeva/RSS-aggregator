@@ -1,10 +1,8 @@
-import * as yup from 'yup';
 import i18n from 'i18next';
-import axios from 'axios';
 
-import getWatchedState from './view.js';
+import getWatchedState from './view/view.js';
 import resources from './locales/index.js';
-import parse from './locales/parser.js';
+import { fetchData, parse, validate } from './utils/utils.js';
 
 const runApp = (t) => {
   const state = {
@@ -22,22 +20,18 @@ const runApp = (t) => {
     feedsContainer: document.querySelector('.feeds'),
   };
 
-  const watchedState = getWatchedState(state, elements);
+  const watchedState = getWatchedState(state, elements, t);
 
   elements.form.addEventListener('submit', (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const text = formData.get('url');
 
-    const schema = yup.string().trim()
-      .required(t('errorsMessage.required'))
-      .url(t('errorsMessage.format'));
-
-    schema.validate(text)
+    validate(text, t)
       .then((validatedUrl) => {
         watchedState.form.isValid = true;
         watchedState.form.error = t('successMessage');
-        return axios.get(`https://allorigins.hexlet.app/get?url=${encodeURIComponent(validatedUrl)}`);
+        return fetchData(validatedUrl);
       })
       .then((response) => {
         const data = parse(response.data.contents);
