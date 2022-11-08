@@ -42,7 +42,17 @@ const runApp = (t) => {
       })
       .catch((error) => {
         watchedState.form.isValid = false;
-        watchedState.form.error = error.message;
+        console.log(error);
+        switch (error.name) {
+          case 'AxiosError':
+            watchedState.form.error = t('errorsMessages.network');
+            break;
+          case 'ValidationError':
+            watchedState.form.error = error.message;
+            break;
+          default:
+            throw new Error(`Unknown error.name: ${error.name}`);
+        }
       });
   });
 };
