@@ -8,5 +8,6 @@ export default {
     feeds: {
       title: 'Фиды',
     },
+    button: 'Просмотр',
   },
 };
