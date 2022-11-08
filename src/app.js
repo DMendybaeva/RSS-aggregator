@@ -10,7 +10,8 @@ const runApp = (t) => {
       isValid: true,
       error: null,
     },
-    feeds: [],
+    feeds: [], // title description linkfeed
+    posts: [], // title, linkPost, linkfeed
   };
 
   const elements = {
@@ -18,6 +19,7 @@ const runApp = (t) => {
     errorContainer: document.querySelector('.feedback'),
     input: document.querySelector('input'),
     feedsContainer: document.querySelector('.feeds'),
+    postsContainer: document.querySelector('.posts'),
   };
 
   const watchedState = getWatchedState(state, elements, t);
@@ -35,11 +37,22 @@ const runApp = (t) => {
       })
       .then((response) => {
         const data = parse(response.data.contents);
-        watchedState.feeds = [data, ...watchedState.feeds];
+        watchedState.feeds = [data.feed, ...state.feeds];
+        watchedState.posts = [...data.posts, ...state.posts];
       })
       .catch((error) => {
         watchedState.form.isValid = false;
-        watchedState.form.error = error.message;
+        console.log(error);
+        switch (error.name) {
+          case 'AxiosError':
+            watchedState.form.error = t('errorsMessages.network');
+            break;
+          case 'ValidationError':
+            watchedState.form.error = error.message;
+            break;
+          default:
+            throw new Error(`Unknown error.name: ${error.name}`);
+        }
       });
   });
 };

@@ -4,6 +4,7 @@ import onChange from 'on-change';
 import renderFeed from './renderFeed.js';
 import handleFormIsValid from './handleFormIsValid.js';
 import handleFormError from './handleFormError.js';
+import renderPosts from './renderPosts.js';
 
 export default (state, elements, t) => onChange(state, (path, value) => {
   switch (path) {
@@ -15,6 +16,10 @@ export default (state, elements, t) => onChange(state, (path, value) => {
       break;
     case 'feeds': {
       renderFeed(value, elements, t);
+      break;
+    }
+    case 'posts': {
+      renderPosts(value, elements, t);
       break;
     }
     default:

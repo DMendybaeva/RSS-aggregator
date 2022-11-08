@@ -4,6 +4,7 @@ export default (url) => {
   yup.setLocale({
     mixed: {
       required: 'errorsMessages.required',
+      // notOneOf: 'errorsMessages.duplicate',
     },
     string: {
       url: 'errorsMessages.format',
