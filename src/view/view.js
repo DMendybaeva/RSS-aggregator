@@ -2,19 +2,19 @@
 import onChange from 'on-change';
 
 import renderFeed from './renderFeed.js';
-import handleFormIsValid from './handleFormIsValid.js';
+import renderFormIsValid from './renderFormIsValid.js';
 import renderFormError from './renderFormError.js';
 import renderPosts from './renderPosts.js';
-import handleProcessState from './handleProcessState.js';
+import renderProcessState from './renderProcessState.js';
 import renderProcessError from './renderProcessError.js';
 
 export default (state, elements, t) => onChange(state, (path, value) => {
   switch (path) {
     case 'form.error':
-      renderFormError(state, value, elements, t);
+      renderFormError(value, elements, t);
       break;
     case 'form.isValid':
-      handleFormIsValid(value, elements);
+      renderFormIsValid(value, elements);
       break;
     case 'feeds': {
       renderFeed(value, elements, t);
@@ -25,7 +25,7 @@ export default (state, elements, t) => onChange(state, (path, value) => {
       break;
     }
     case 'processState':
-      handleProcessState(state, elements, t);
+      renderProcessState(state, elements, t);
       break;
     case 'processError':
       renderProcessError(value, elements, t);

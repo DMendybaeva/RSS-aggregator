@@ -1,4 +1,4 @@
 /* eslint-disable no-param-reassign */
-export default (value, elements, t) => {
-  elements.errorContainer.textContent = t(value);
+export default (value, { errorContainer }, t) => {
+  errorContainer.textContent = t(value);
 };
