@@ -8,10 +8,12 @@ const runApp = (t) => {
   const state = {
     form: {
       isValid: true,
-      error: null,
+      error: null, // дубликат текст пусто
     },
     feeds: [], // title description linkfeed
     posts: [], // title, linkPost, linkfeed
+    processState: 'filling', // loading processed failed
+    processError: null, // сеть парсинг
   };
 
   const elements = {
@@ -32,20 +34,23 @@ const runApp = (t) => {
     validate(text, t)
       .then((validatedUrl) => {
         watchedState.form.isValid = true;
-        watchedState.form.error = t('successMessage');
+        watchedState.processState = 'loading';
         return fetchData(validatedUrl);
       })
       .then((response) => {
         const data = parse(response.data.contents);
         watchedState.feeds = [data.feed, ...state.feeds];
         watchedState.posts = [...data.posts, ...state.posts];
+        watchedState.processState = 'processed';
+        elements.form.reset();
+        elements.input.focus();
       })
       .catch((error) => {
         watchedState.form.isValid = false;
-        console.log(error);
+        watchedState.processState = 'failed';
         switch (error.name) {
           case 'AxiosError':
-            watchedState.form.error = t('errorsMessages.network');
+            watchedState.processError = t('errorsMessages.network');
             break;
           case 'ValidationError':
             watchedState.form.error = error.message;
