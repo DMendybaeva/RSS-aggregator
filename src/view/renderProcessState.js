@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
-export default (state, { errorContainer }, t) => {
-  switch (state.processState) {
+export default ({ processState }, { errorContainer }, t) => {
+  switch (processState) {
     case 'filling': {
       break;
     }
@@ -19,6 +19,6 @@ export default (state, { errorContainer }, t) => {
       break;
     }
     default:
-      throw new Error(`Unknown processState: ${state.processState}`);
+      throw new Error(`Unknown processState: ${processState}`);
   }
 };
