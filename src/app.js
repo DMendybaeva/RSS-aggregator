@@ -7,7 +7,7 @@ import { fetchData, parse, validate } from './utils/utils.js';
 const runApp = (t) => {
   const state = {
     form: {
-      isValid: true,
+      isValid: false,
       error: null, // дубликат текст пусто
     },
     feeds: [], // title description linkfeed
