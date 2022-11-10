@@ -1,4 +1,4 @@
-import _ from 'lodash';
+import { modifyFeeds, modifyPosts } from './modify.js';
 
 export default (contents, url) => {
   const parser = new DOMParser();
@@ -9,15 +9,14 @@ export default (contents, url) => {
   const feed = {
     title: parsedData.querySelector('title').textContent,
     description: parsedData.querySelector('description').textContent,
-    idFeed: _.uniqueId('feed-'),
-    url,
   };
+  modifyFeeds(feed, url);
+
   const posts = [...postsItems].map((post) => ({
     title: post.querySelector('title').textContent,
     linkPost: post.querySelector('link').textContent,
-    idFeed: feed.idFeed,
-    id: _.uniqueId(),
   }));
+  modifyPosts(feed, posts);
 
   const data = { feed, posts };
   return data;
