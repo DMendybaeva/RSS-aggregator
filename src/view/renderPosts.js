@@ -28,6 +28,7 @@ export default (value, { postsContainer }, t) => {
       const a = document.createElement('a');
       a.setAttribute('href', post.linkPost);
       a.classList.add('fw-bold');
+      a.setAttribute('data-id', post.id);
       a.setAttribute('target', '_blank');
       a.setAttribute('rel', 'noopener noreferrer');
       a.textContent = post.title;

@@ -3,6 +3,7 @@ import i18n from 'i18next';
 import getWatchedState from './view/view.js';
 import resources from './locales/index.js';
 import { fetchData, parse, validate } from './utils/utils.js';
+import { modifyFeed, modifyPosts } from './utils/modify.js';
 
 const runApp = (t) => {
   const state = {
@@ -31,17 +32,22 @@ const runApp = (t) => {
     const formData = new FormData(e.target);
     const text = formData.get('url');
 
-    validate(text, t)
+    validate(state, text)
       .then((validatedUrl) => {
         watchedState.form.isValid = true;
         watchedState.processState = 'loading';
         return fetchData(validatedUrl);
       })
       .then((response) => {
-        const data = parse(response.data.contents);
-        watchedState.feeds = [data.feed, ...state.feeds];
-        watchedState.posts = [...data.posts, ...state.posts];
+        const { url } = response.data.status;
+        const data = parse(response.data.contents, url);
+        const modifiedFeed = modifyFeed(data.feed, url);
+        const modifiedPosts = modifyPosts(data.feed, data.posts);
+
+        watchedState.feeds = [modifiedFeed, ...state.feeds];
+        watchedState.posts = [...modifiedPosts, ...state.posts];
         watchedState.processState = 'processed';
+
         elements.form.reset();
         elements.input.focus();
       })
