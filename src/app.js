@@ -38,7 +38,8 @@ const runApp = (t) => {
         return fetchData(validatedUrl);
       })
       .then((response) => {
-        const data = parse(response.data.contents);
+        const { url } = response.data.status;
+        const data = parse(response.data.contents, url);
         watchedState.feeds = [data.feed, ...state.feeds];
         watchedState.posts = [...data.posts, ...state.posts];
         watchedState.processState = 'processed';
