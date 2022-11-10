@@ -1,6 +1,4 @@
-import { modifyFeeds, modifyPosts } from './modify.js';
-
-export default (contents, url) => {
+export default (contents) => {
   const parser = new DOMParser();
   const parsedData = parser.parseFromString(contents, 'application/xml');
 
@@ -10,13 +8,11 @@ export default (contents, url) => {
     title: parsedData.querySelector('title').textContent,
     description: parsedData.querySelector('description').textContent,
   };
-  modifyFeeds(feed, url);
 
   const posts = [...postsItems].map((post) => ({
     title: post.querySelector('title').textContent,
     linkPost: post.querySelector('link').textContent,
   }));
-  modifyPosts(feed, posts);
 
   const data = { feed, posts };
   return data;
