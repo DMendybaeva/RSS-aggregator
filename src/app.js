@@ -23,6 +23,7 @@ const runApp = (t) => {
     input: document.querySelector('input'),
     feedsContainer: document.querySelector('.feeds'),
     postsContainer: document.querySelector('.posts'),
+    submitButton: document.querySelector('button[type="submit"]'),
   };
 
   const watchedState = getWatchedState(state, elements, t);
