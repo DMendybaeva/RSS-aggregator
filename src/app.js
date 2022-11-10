@@ -31,7 +31,7 @@ const runApp = (t) => {
     const formData = new FormData(e.target);
     const text = formData.get('url');
 
-    validate(text, t)
+    validate(state, text)
       .then((validatedUrl) => {
         watchedState.form.isValid = true;
         watchedState.processState = 'loading';

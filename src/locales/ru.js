@@ -4,6 +4,7 @@ export default {
     errorsMessages: {
       format: 'Ссылка должна быть валидным URL',
       required: 'Поле не должно быть пустым',
+      duplicate: 'RSS уже существует',
       network: 'Ошибка сети',
     },
     feeds: {
