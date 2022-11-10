@@ -42,10 +42,10 @@ const runApp = (t) => {
         const { url } = response.data.status;
         const data = parse(response.data.contents, url);
         const modifiedFeed = modifyFeed(data.feed, url);
-        const posts = modifyPosts(data.feed, data.posts);
+        const modifiedPosts = modifyPosts(data.feed, data.posts);
 
         watchedState.feeds = [modifiedFeed, ...state.feeds];
-        watchedState.posts = [...posts, ...state.posts];
+        watchedState.posts = [...modifiedPosts, ...state.posts];
         watchedState.processState = 'processed';
 
         elements.form.reset();
