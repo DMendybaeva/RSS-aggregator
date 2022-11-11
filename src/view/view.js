@@ -30,6 +30,8 @@ export default (state, elements, t) => onChange(state, (path, value) => {
     case 'processError':
       renderProcessError(value, elements, t);
       break;
+    case 'timerId':
+      break;
     default:
       throw new Error(`Unknown path: ${path}`);
   }

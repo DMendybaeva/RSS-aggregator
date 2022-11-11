@@ -2,7 +2,13 @@ import i18n from 'i18next';
 
 import getWatchedState from './view/view.js';
 import resources from './locales/index.js';
-import { fetchData, parse, validate } from './utils/utils.js';
+import {
+  fetchData,
+  parse,
+  validate,
+  DELAY,
+  updatePosts,
+} from './utils/utils.js';
 import { modifyFeed, modifyPosts } from './utils/modify.js';
 
 const runApp = (t) => {
@@ -15,6 +21,7 @@ const runApp = (t) => {
     posts: [], // title, linkPost, linkfeed
     processState: 'filling', // loading processed failed
     processError: null, // сеть парсинг
+    timerId: null,
   };
 
   const elements = {
@@ -48,6 +55,8 @@ const runApp = (t) => {
         watchedState.feeds = [modifiedFeed, ...state.feeds];
         watchedState.posts = [...modifiedPosts, ...state.posts];
         watchedState.processState = 'processed';
+
+        watchedState.timerId = setTimeout(() => updatePosts(watchedState), DELAY);
 
         elements.form.reset();
         elements.input.focus();
