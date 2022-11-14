@@ -8,8 +8,9 @@ import {
   validate,
   DELAY,
   updatePosts,
-} from './utils/utils.js';
-import { modifyFeed, modifyPosts } from './utils/modify.js';
+  modifyFeed,
+  modifyPosts,
+} from './utils/index.js';
 
 const runApp = (t) => {
   const state = {
@@ -54,7 +55,6 @@ const runApp = (t) => {
         const modifiedPosts = modifyPosts(data.feed, data.posts);
 
         watchedState.feeds = [modifiedFeed, ...state.feeds];
-
         watchedState.posts = [...modifiedPosts, ...state.posts];
         watchedState.processState = 'processed';
         watchedState.timerId = setTimeout(() => updatePosts(watchedState), DELAY);
