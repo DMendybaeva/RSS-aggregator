@@ -48,14 +48,15 @@ const runApp = (t) => {
       })
       .then((response) => {
         const { url } = response.data.status;
-        const data = parse(response.data.contents, url);
+
+        const data = parse(response.data.contents);
         const modifiedFeed = modifyFeed(data.feed, url);
         const modifiedPosts = modifyPosts(data.feed, data.posts);
 
         watchedState.feeds = [modifiedFeed, ...state.feeds];
+
         watchedState.posts = [...modifiedPosts, ...state.posts];
         watchedState.processState = 'processed';
-
         watchedState.timerId = setTimeout(() => updatePosts(watchedState), DELAY);
 
         elements.form.reset();
