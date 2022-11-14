@@ -47,12 +47,12 @@ const runApp = (t) => {
         watchedState.processState = 'loading';
         return fetchData(validatedUrl);
       })
-      .then((response) => {
-        const { url } = response.data.status;
+      .then(({ data: { contents, status } }) => {
+        const { url } = status;
 
-        const data = parse(response.data.contents);
-        const modifiedFeed = modifyFeed(data.feed, url);
-        const modifiedPosts = modifyPosts(data.feed, data.posts);
+        const { feed, posts } = parse(contents);
+        const modifiedFeed = modifyFeed(feed, url);
+        const modifiedPosts = modifyPosts(feed, posts);
 
         watchedState.feeds = [modifiedFeed, ...state.feeds];
         watchedState.posts = [...modifiedPosts, ...state.posts];
