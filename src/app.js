@@ -2,8 +2,15 @@ import i18n from 'i18next';
 
 import getWatchedState from './view/view.js';
 import resources from './locales/index.js';
-import { fetchData, parse, validate } from './utils/utils.js';
-import { modifyFeed, modifyPosts } from './utils/modify.js';
+import {
+  fetchData,
+  parse,
+  validate,
+  DELAY,
+  updatePosts,
+  modifyFeed,
+  modifyPosts,
+} from './utils/index.js';
 
 const runApp = (t) => {
   const state = {
@@ -15,6 +22,7 @@ const runApp = (t) => {
     posts: [], // title, linkPost, linkfeed
     processState: 'filling', // loading processed failed
     processError: null, // сеть парсинг
+    timerId: null,
   };
 
   const elements = {
@@ -39,15 +47,17 @@ const runApp = (t) => {
         watchedState.processState = 'loading';
         return fetchData(validatedUrl);
       })
-      .then((response) => {
-        const { url } = response.data.status;
-        const data = parse(response.data.contents, url);
-        const modifiedFeed = modifyFeed(data.feed, url);
-        const modifiedPosts = modifyPosts(data.feed, data.posts);
+      .then(({ data: { contents, status } }) => {
+        const { url } = status;
+
+        const { feed, posts } = parse(contents);
+        const modifiedFeed = modifyFeed(feed, url);
+        const modifiedPosts = modifyPosts(feed, posts);
 
         watchedState.feeds = [modifiedFeed, ...state.feeds];
         watchedState.posts = [...modifiedPosts, ...state.posts];
         watchedState.processState = 'processed';
+        watchedState.timerId = setTimeout(() => updatePosts(watchedState), DELAY);
 
         elements.form.reset();
         elements.input.focus();
