@@ -13,8 +13,8 @@ export const updatePosts = (watchedState) => {
       const updatedPosts = responses
         // eslint-disable-next-line camelcase
         .filter(({ data: { status: { http_code } } }) => http_code === 200)
-        .flatMap((response, idx) => {
-          const { posts } = parse(response.data.contents);
+        .flatMap(({ data: { contents } }, idx) => {
+          const { posts } = parse(contents);
           const modifiedPosts = modifyPosts(watchedState.feeds[idx], posts);
           return modifiedPosts;
         });
