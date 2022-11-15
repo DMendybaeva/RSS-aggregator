@@ -15,7 +15,7 @@ export default (value, { uiState: { shownPostsId } }, { postsContainer }, t) => 
   card.append(ul);
 
   value
-    .forEach((post) => {
+    .forEach(({ id: postId, linkPost, title }) => {
       const li = document.createElement('li');
       li.classList.add(
         'list-group-item',
@@ -26,21 +26,21 @@ export default (value, { uiState: { shownPostsId } }, { postsContainer }, t) => 
         'border-end-0',
       );
 
-      const wasPostShown = shownPostsId.has(post.id);
+      const wasPostShown = shownPostsId.has(postId);
 
       const a = document.createElement('a');
-      a.setAttribute('href', post.linkPost);
+      a.setAttribute('href', linkPost);
       a.classList.add(wasPostShown ? 'fw-normal' : 'fw-bold');
-      a.setAttribute('data-id', post.id);
+      a.setAttribute('data-id', postId);
       a.setAttribute('target', '_blank');
       a.setAttribute('rel', 'noopener noreferrer');
-      a.textContent = post.title;
+      a.textContent = title;
 
       const button = document.createElement('button');
       button.textContent = t('button');
       button.setAttribute('type', 'button');
       button.classList.add('btn', 'btn-outline-primary', 'btn-sm');
-      button.setAttribute('data-id', post.id);
+      button.setAttribute('data-id', postId);
       button.setAttribute('data-bs-toggle', 'modal');
       button.setAttribute('data-bs-target', '#modal');
 
