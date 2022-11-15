@@ -24,7 +24,8 @@ const runApp = (t) => {
     processError: null, // сеть парсинг
     timerId: null,
     uiState: {
-      shownPosts: [],
+      shownPostsId: new Set(),
+      activePost: null,
     },
   };
 
@@ -87,7 +88,9 @@ const runApp = (t) => {
     const btn = e.relatedTarget;
     const btnId = btn.dataset.id;
     const activePost = watchedState.posts.find(({ id }) => id === btnId);
-    watchedState.uiState.shownPosts = [activePost, ...watchedState.uiState.shownPosts];
+
+    watchedState.uiState.activePost = activePost;
+    watchedState.uiState.shownPostsId.add(activePost.id);
   });
 };
 
