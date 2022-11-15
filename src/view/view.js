@@ -22,7 +22,7 @@ export default (state, elements, t) => onChange(state, (path, value) => {
       break;
     }
     case 'posts': {
-      renderPosts(value, elements, t);
+      renderPosts(value, state, elements, t);
       break;
     }
     case 'processState':

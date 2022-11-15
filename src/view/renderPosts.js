@@ -1,4 +1,4 @@
-export default (value, { postsContainer }, t) => {
+export default (value, { uiState: { shownPosts } }, { postsContainer }, t) => {
   const card = document.createElement('div');
   card.classList.add('card', 'border-0');
 
@@ -25,9 +25,12 @@ export default (value, { postsContainer }, t) => {
         'border-0',
         'border-end-0',
       );
+
+      const isPostShown = shownPosts.map(({ id }) => id).includes(post.id);
+
       const a = document.createElement('a');
       a.setAttribute('href', post.linkPost);
-      a.classList.add('fw-bold');
+      a.classList.add(isPostShown ? 'fw-normal' : 'fw-bold');
       a.setAttribute('data-id', post.id);
       a.setAttribute('target', '_blank');
       a.setAttribute('rel', 'noopener noreferrer');
