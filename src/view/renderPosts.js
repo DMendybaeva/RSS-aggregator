@@ -37,6 +37,7 @@ export default (value, { postsContainer }, t) => {
       button.textContent = t('button');
       button.setAttribute('type', 'button');
       button.classList.add('btn', 'btn-outline-primary', 'btn-sm');
+      button.setAttribute('data-id', post.id);
       button.setAttribute('data-bs-toggle', 'modal');
       button.setAttribute('data-bs-target', '#modal');
 

@@ -23,6 +23,9 @@ const runApp = (t) => {
     processState: 'filling', // loading processed failed
     processError: null, // сеть парсинг
     timerId: null,
+    uiState: {
+      shownPosts: [],
+    },
   };
 
   const elements = {
@@ -32,6 +35,8 @@ const runApp = (t) => {
     feedsContainer: document.querySelector('.feeds'),
     postsContainer: document.querySelector('.posts'),
     submitButton: document.querySelector('button[type="submit"]'),
+    postsButtons: document.querySelectorAll('button[data-bs-toggle="modal"]'),
+    modal: document.querySelector('#modal'),
   };
 
   const watchedState = getWatchedState(state, elements, t);
@@ -76,6 +81,13 @@ const runApp = (t) => {
             throw new Error(`Unknown error.name: ${error.name}`);
         }
       });
+  });
+
+  elements.modal.addEventListener('show.bs.modal', (e) => {
+    const btn = e.relatedTarget;
+    const btnId = btn.dataset.id;
+    const activePost = watchedState.posts.find(({ id }) => id === btnId);
+    watchedState.uiState.shownPosts = [activePost, ...watchedState.uiState.shownPosts];
   });
 };
 
