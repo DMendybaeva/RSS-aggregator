@@ -8,7 +8,7 @@ import renderPosts from './renderPosts.js';
 import renderProcessState from './renderProcessState.js';
 import renderProcessError from './renderProcessError.js';
 import renderModal from './renderModal.js';
-import hideShownPosts from './hideShownPosts.js';
+import renderShownPosts from './renderShownPosts.js';
 
 export default (state, elements, t) => onChange(state, (path, value) => {
   switch (path) {
@@ -38,7 +38,7 @@ export default (state, elements, t) => onChange(state, (path, value) => {
       renderModal(value, elements);
       break;
     case 'uiState.shownPostsId':
-      hideShownPosts(state, elements);
+      renderShownPosts(state, elements);
       break;
     default:
       throw new Error(`Unknown path: ${path}`);

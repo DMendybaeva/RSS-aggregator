@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 
-import getWatchedState from './view/view.js';
+import getWatchedState from './view/index.js';
 import resources from './locales/index.js';
 import {
   fetchData,
@@ -36,7 +36,6 @@ const runApp = (t) => {
     feedsContainer: document.querySelector('.feeds'),
     postsContainer: document.querySelector('.posts'),
     submitButton: document.querySelector('button[type="submit"]'),
-    postsButtons: document.querySelectorAll('button[data-bs-toggle="modal"]'),
     modal: document.querySelector('#modal'),
   };
 
