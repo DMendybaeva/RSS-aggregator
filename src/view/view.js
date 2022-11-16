@@ -38,7 +38,7 @@ export default (state, elements, t) => onChange(state, (path, value) => {
       renderModal(value, elements);
       break;
     case 'uiState.shownPostsId':
-      hideShownPosts(value, elements);
+      hideShownPosts(state, elements);
       break;
     default:
       throw new Error(`Unknown path: ${path}`);

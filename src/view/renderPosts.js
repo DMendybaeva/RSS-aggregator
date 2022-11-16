@@ -30,7 +30,7 @@ export default (value, { uiState: { shownPostsId } }, { postsContainer }, t) => 
 
       const a = document.createElement('a');
       a.setAttribute('href', linkPost);
-      a.classList.add(wasPostShown ? 'fw-normal' : 'fw-bold');
+      a.classList.add(wasPostShown ? ('fw-normal', 'link-secondary') : 'fw-bold');
       a.setAttribute('data-id', postId);
       a.setAttribute('target', '_blank');
       a.setAttribute('rel', 'noopener noreferrer');

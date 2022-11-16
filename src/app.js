@@ -84,8 +84,8 @@ const runApp = (t) => {
       });
   });
 
-  elements.modal.addEventListener('show.bs.modal', ({ relatedTarget: { dataset: { id: btnId } } }) => {
-    const activePost = watchedState.posts.find(({ id }) => id === btnId);
+  elements.postsContainer.addEventListener('click', ({ target }) => {
+    const activePost = watchedState.posts.find(({ id }) => id === target.dataset.id);
 
     watchedState.uiState.activePost = activePost;
     watchedState.uiState.shownPostsId.add(activePost.id);

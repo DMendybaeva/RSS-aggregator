@@ -1,11 +1,5 @@
-export default (shownPostsId, elements) => {
-  const shownPostsElements = elements.postsContainer.querySelectorAll('a');
-
-  shownPostsElements.forEach((postElement) => {
-    const postElementId = postElement.dataset.id;
-    if (shownPostsId.has(postElementId)) {
-      postElement.classList.remove('fw-bold');
-      postElement.classList.add('fw-normal');
-    }
-  });
+export default (state, elements) => {
+  const targetEl = elements.postsContainer.querySelector(`a[data-id="${state.uiState.activePost.id}"]`);
+  targetEl.classList.remove('fw-bold');
+  targetEl.classList.add('fw-normal', 'link-secondary');
 };
