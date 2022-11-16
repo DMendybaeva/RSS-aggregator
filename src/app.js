@@ -17,12 +17,12 @@ const runApp = (t) => {
   const state = {
     form: {
       isValid: false,
-      error: null, // дубликат текст пусто
+      error: null,
     },
-    feeds: [], // title description linkfeed
-    posts: [], // title, linkPost, linkfeed
-    processState: 'filling', // loading processed failed
-    processError: null, // сеть парсинг сервер
+    feeds: [],
+    posts: [],
+    processState: 'filling',
+    processError: null,
     timerId: null,
     uiState: {
       shownPostsId: new Set(),
@@ -57,7 +57,7 @@ const runApp = (t) => {
       .then(({ data: { contents, status: { http_code, url } } }) => {
         // eslint-disable-next-line camelcase
         if (http_code === TO_MANY_RESPONSES_STATUS) {
-          throw new TooManyResponsesError('tooManyResponses');
+          throw new TooManyResponsesError('Too many requests to server');
         }
 
         const { feed, posts } = parse(contents);
