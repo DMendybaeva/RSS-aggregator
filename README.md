@@ -7,7 +7,7 @@
 
 RSS - special format that describes news feeds, articles announcements etc. It`s the easiest way for websites (usually blogs) to allow users to subscribe for feeds changes. For this, special services called RSS aggregators are used.
 This project is simple implementation of RSS aggregator, that allow user to subscribe for interesting feeds. RSS aggregator automatically monitor each feed updates and show new posts or articles for the user. By clicking on each post user can see modal preview, after it post would be marked as readed.
-You can check deployed project on [Vercel] #.
+You can check deployed project on [Vercel] (https://rss-aggregator-xi.vercel.app/).
 P.S. You can use [this](https://github.com/mbertolacci/lorem-rss) for testing all project features.
 Used technologies:
 - Vanilla JS: DOM API, Promises.
