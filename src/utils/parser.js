@@ -11,6 +11,7 @@ export default (contents) => {
 
   const posts = [...postsItems].map((post) => ({
     title: post.querySelector('title').textContent,
+    description: post.querySelector('description').textContent,
     linkPost: post.querySelector('link').textContent,
   }));
 

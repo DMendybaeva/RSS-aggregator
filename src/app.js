@@ -1,6 +1,6 @@
 import i18n from 'i18next';
 
-import getWatchedState from './view/view.js';
+import getWatchedState from './view/index.js';
 import resources from './locales/index.js';
 import {
   fetchData,
@@ -23,6 +23,10 @@ const runApp = (t) => {
     processState: 'filling', // loading processed failed
     processError: null, // сеть парсинг
     timerId: null,
+    uiState: {
+      shownPostsId: new Set(),
+      activePost: null,
+    },
   };
 
   const elements = {
@@ -32,6 +36,7 @@ const runApp = (t) => {
     feedsContainer: document.querySelector('.feeds'),
     postsContainer: document.querySelector('.posts'),
     submitButton: document.querySelector('button[type="submit"]'),
+    modal: document.querySelector('#modal'),
   };
 
   const watchedState = getWatchedState(state, elements, t);
@@ -76,6 +81,14 @@ const runApp = (t) => {
             throw new Error(`Unknown error.name: ${error.name}`);
         }
       });
+  });
+
+  elements.postsContainer.addEventListener('click', ({ target }) => {
+    const activePost = watchedState.posts.find(({ id }) => id === target.dataset.id);
+    if (activePost) {
+      watchedState.uiState.activePost = activePost;
+      watchedState.uiState.shownPostsId.add(activePost.id);
+    }
   });
 };
 
