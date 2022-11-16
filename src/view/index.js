@@ -18,14 +18,12 @@ export default (state, elements, t) => onChange(state, (path, value) => {
     case 'form.isValid':
       renderFormIsValid(value, elements);
       break;
-    case 'feeds': {
+    case 'feeds':
       renderFeed(value, elements, t);
       break;
-    }
-    case 'posts': {
+    case 'posts':
       renderPosts(value, state, elements, t);
       break;
-    }
     case 'processState':
       renderProcessState(state, elements, t);
       break;

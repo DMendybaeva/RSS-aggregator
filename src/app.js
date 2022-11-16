@@ -2,6 +2,7 @@ import i18n from 'i18next';
 
 import getWatchedState from './view/index.js';
 import resources from './locales/index.js';
+import { TooManyResponsesError, TO_MANY_RESPONSES_STATUS } from './utils/errors.js';
 import {
   fetchData,
   parse,
@@ -16,12 +17,12 @@ const runApp = (t) => {
   const state = {
     form: {
       isValid: false,
-      error: null, // дубликат текст пусто
+      error: null,
     },
-    feeds: [], // title description linkfeed
-    posts: [], // title, linkPost, linkfeed
-    processState: 'filling', // loading processed failed
-    processError: null, // сеть парсинг
+    feeds: [],
+    posts: [],
+    processState: 'filling',
+    processError: null,
     timerId: null,
     uiState: {
       shownPostsId: new Set(),
@@ -52,8 +53,12 @@ const runApp = (t) => {
         watchedState.processState = 'loading';
         return fetchData(validatedUrl);
       })
-      .then(({ data: { contents, status } }) => {
-        const { url } = status;
+      // eslint-disable-next-line camelcase
+      .then(({ data: { contents, status: { http_code, url } } }) => {
+        // eslint-disable-next-line camelcase
+        if (http_code === TO_MANY_RESPONSES_STATUS) {
+          throw new TooManyResponsesError('Too many requests to server');
+        }
 
         const { feed, posts } = parse(contents);
         const modifiedFeed = modifyFeed(feed, url);
@@ -76,6 +81,12 @@ const runApp = (t) => {
             break;
           case 'ValidationError':
             watchedState.form.error = error.message;
+            break;
+          case 'TypeError':
+            watchedState.processError = t('errorsMessages.parsing');
+            break;
+          case 'TooManyResponsesError':
+            watchedState.processError = t('errorsMessages.tooManyResponses');
             break;
           default:
             throw new Error(`Unknown error.name: ${error.name}`);
