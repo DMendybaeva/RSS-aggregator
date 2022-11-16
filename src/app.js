@@ -85,9 +85,10 @@ const runApp = (t) => {
 
   elements.postsContainer.addEventListener('click', ({ target }) => {
     const activePost = watchedState.posts.find(({ id }) => id === target.dataset.id);
-
-    watchedState.uiState.activePost = activePost;
-    watchedState.uiState.shownPostsId.add(activePost.id);
+    if (activePost) {
+      watchedState.uiState.activePost = activePost;
+      watchedState.uiState.shownPostsId.add(activePost.id);
+    }
   });
 };
 
